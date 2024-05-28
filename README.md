@@ -86,4 +86,4 @@ deactivate service
 
 For the table migration:
 
-https://github.com/timdin/follower_system_design/blob/52b378b00bff46da7e016cb5d306c0b07e57a0c7/migrate_sql/migrate
+https://github.com/timdin/follower_system_design/blob/main/migrate_sql/migrate#L1-L23
