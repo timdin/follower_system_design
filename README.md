@@ -84,6 +84,15 @@ deactivate service
 
 ## pseudo Code implementation
 
-For the table migration:
+Following are the pseudo code implementations
 
-https://github.com/timdin/follower_system_design/blob/main/migrate_sql/migrate#L1-L23
+- migrate database: [migrate](https://github.com/timdin/follower_system_design/blob/main/migrate_sql/migrate)
+
+- service:
+  - follow user:
+    [followUser](https://github.com/timdin/follower_system_design/blob/main/service/follow_user)
+  - unfollow user:
+    [unfollowUser](https://github.com/timdin/follower_system_design/blob/main/service/unfollowUser)
+  - get list (including follower, following and friends):
+
+    [getList](https://github.com/timdin/follower_system_design/blob/main/service/getList)
