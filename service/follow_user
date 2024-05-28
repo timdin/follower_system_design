@@ -1,0 +1,13 @@
+FUNCTION followUser(FOLLOWER_ID, FOLLOWED_ID):
+    -- Insert follow relationship into the database
+    SQL QUERY "INSERT INTO follows (follower_id, followed_id) VALUES (?, ?)
+               ON DUPLICATE KEY UPDATE created_at = CURRENT_TIMESTAMP"
+    EXECUTE QUERY with FOLLOWER_ID, FOLLOWED_ID
+
+    -- Invalidate the cache for the follower's following list
+    Redis.DELETE "following:FOLLOWER_ID:*"
+    
+    -- Invalidate the cache for the followed user's followers list
+    Redis.DELETE "followers:FOLLOWED_ID:*"
+
+    RETURN success

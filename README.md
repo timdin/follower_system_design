@@ -16,13 +16,33 @@ The design should also considered high traffic scenario.
 
 I'll assume the existing system already have the basic user system, and the schema will be similar to the following chart
 
-| User_id | user_profile_id | ... |
+| id | user_profile_id | ... |
 |---------|------|-----|
 | system generated id | user defined id | ....|
 
 The above user id should be the identifier for the internal system, while the user profile id will be the identifier user used to retrieve other user profile.
 
 ## Basic design
+
+Following is the table design for the system
+
+Schema design
+
+```mermaid
+classDiagram
+class user{
+    + id: int
+    + user_profile_id: string
+    ...
+}
+
+class follows{
+    // the user id that follows another user
+    + follower_id: int --> user.id
+    // the user id that being followed
+    + followed_id: int --> user.id
+}
+```
 
 Here is a glimps of how the system handles the user interaction
 
@@ -62,20 +82,4 @@ service ->> user: return
 deactivate service
 ```
 
-Data base design
-
-```mermaid
-classDiagram
-class user{
-    + user_id: int
-    + user_profile_id: string
-    ...
-}
-
-class follows{
-    // the user id that follows another user
-    + follower_id: int --> user.user_id
-    // the user id that being followed
-    + followed_id: int --> user.user_id
-}
-```
+## pseudo Code implementation

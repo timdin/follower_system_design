@@ -1,0 +1,23 @@
+-- This should be an existing table
+-- CREATE TABLE users (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     user_profile_id VARCHAR(50) UNIQUE NOT NULL,
+--     ...
+-- );
+
+CREATE TABLE follows (
+    -- the user id that follows another user
+    follower_id INT NOT NULL,
+    -- the user id that being followed
+    followed_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -- use composite primary key as user cannot follow someone twice, unless unfollow first
+    PRIMARY KEY (follower_id, followed_id),
+    -- cascade user deletion from the user table
+    FOREIGN KEY (follower_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (followed_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- create index for the follows table for faster queries
+CREATE INDEX idx_follower_id ON follows(follower_id);
+CREATE INDEX idx_followed_id ON follows(followed_id);

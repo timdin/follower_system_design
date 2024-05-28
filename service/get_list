@@ -1,0 +1,41 @@
+FUNCTION getPaginatedList(QUERY, CACHE_KEY):
+    -- Check cache first
+    RESULT = Redis.GET(CACHE_KEY)
+    
+    IF RESULT EXISTS:
+        RETURN RESULT
+
+    -- Execute the query
+    SQL QUERY EXECUTE QUERY
+    RESULT = FETCH rows
+
+    -- Cache the result
+    Redis.SET(CACHE_KEY, RESULT, EXPIRATION = 1 hour)
+    
+    RETURN RESULT
+
+FUNCTION getFollowing(USER_ID, PAGE, PER_PAGE):
+    QUERY = "SELECT * FROM users u 
+            JOIN follows f ON u.id = f.followed_id 
+            WHERE f.follower_id = ? ORDER BY f.created_at DESC LIMIT ? OFFSET ?"
+
+    CACHE_KEY = format("following:%d:%d:%d", USER_ID, PAGE, PER_PAGE)
+    RETURN getPaginatedList(QUERY, CACHE_KEY)
+
+FUNCTION getFollowers(USER_ID, PAGE, PER_PAGE):
+    QUERY = "SELECT * FROM users u 
+            JOIN follows f ON u.id = f.follower_id 
+            WHERE f.followed_id = ? ORDER BY f.created_at DESC LIMIT ? OFFSET ?"
+    
+    CACHE_KEY = format("followers:%d:%d:%d", USER_ID, PAGE, PER_PAGE)
+    RETURN getPaginatedList(QUERY, CACHE_KEY)
+
+FUNCTION getFriends(USER_ID, PAGE, PER_PAGE):
+    QUERY = "SELECT * FROM users u 
+            JOIN follows f1 ON u.id = f1.followed_id 
+            JOIN follows f2 ON u.id = f2.follower_id 
+            WHERE f1.follower_id = ? AND f2.followed_id = ? 
+            ORDER BY u.username LIMIT ? OFFSET ?"
+    
+    CACHE_KEY = format("friends:%d:%d:%d", USER_ID, PAGE, PER_PAGE)
+    RETURN getPaginatedList(QUERY, CACHE_KEY)
