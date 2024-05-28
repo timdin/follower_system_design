@@ -1,12 +1,12 @@
-FUNCTION unfollowUser(follower_id, followed_id):
+FUNCTION unfollowUser(FOLLOWER_ID, FOLLOWED_ID):
     -- Delete follow relationship from the database
     SQL QUERY "DELETE FROM follows WHERE follower_id = ? AND followed_id = ?"
-    EXECUTE QUERY with follower_id, followed_id
+    EXECUTE QUERY with FOLLOWER_ID, FOLLOWED_ID
 
     -- Invalidate the cache for the follower's following list
-    Redis.DELETE "following:follower_id:*"
+    Redis.DELETE "following:FOLLOWER_ID:*"
     
     -- Invalidate the cache for the followed user's followers list
-    Redis.DELETE "followers:followed_id:*"
+    Redis.DELETE "followers:FOLLOWED_ID:*"
 
     RETURN success
