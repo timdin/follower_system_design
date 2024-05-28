@@ -96,3 +96,11 @@ Following are the pseudo code implementations
   - get list (including follower, following and friends):
 
     [getList](https://github.com/timdin/follower_system_design/blob/main/service/getList)
+
+## How to further improve the system
+
+The following initiatives will be based on the result of the feature launch
+
+- Monitor cache hit rate
+- Scallability for huge follower/following list (something similar to how instagram display the follower count which exceed 10K)
+- (Also steal from instagram) Add close friend list
