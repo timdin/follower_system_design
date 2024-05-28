@@ -83,3 +83,7 @@ deactivate service
 ```
 
 ## pseudo Code implementation
+
+For the table migration:
+
+https://github.com/timdin/follower_system_design/blob/52b378b00bff46da7e016cb5d306c0b07e57a0c7/migrate_sql/migrate
