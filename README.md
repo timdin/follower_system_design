@@ -90,7 +90,7 @@ Following are the pseudo code implementations
 
 - service:
   - follow user:
-    [followUser](https://github.com/timdin/follower_system_design/blob/main/service/follow_user)
+    [followUser](https://github.com/timdin/follower_system_design/blob/main/service/followUser)
   - unfollow user:
     [unfollowUser](https://github.com/timdin/follower_system_design/blob/main/service/unfollowUser)
   - get list (including follower, following and friends):
